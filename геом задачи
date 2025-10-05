@@ -16,3 +16,65 @@ int main () {
     cout << "площадь" << S << endl;
     return 0;
 }
+
+задача 2
+#include <iostream> 
+#include <cmath>
+using namespace std;
+int main () {
+    int n[4][2];
+    for (int i = 0; i < 4; i++) {
+        cout << "координаты ввести" << i << " (x y) ";
+        cin >> n[i][0] >> n[i][1];
+    }
+    int p = 0;
+    for (int i = 0; i < 4; i++) {
+        int next = (i + 1) % 4; 
+        double dx = n[next][0] - n[i][0];
+        double dy = n[next][1] - n[i][1];
+        p += sqrt(dx*dx + dy*dy);
+    }
+
+    cout << "Периметр многоугольника = " << p << endl;
+    return 0;
+}
+
+задача 3
+#include <iostream> 
+#include <cmath>
+using namespace std;
+int main () {
+    float n[3][2];
+    for(int i = 0; i < 3; i++) {
+    cout << "координаты" << i << "(x y)";
+    cin >> n[i][0] >> n[i][1];    
+    }
+    float cx = (n[0][0] + n[0][1] + n[0][2]) / 3;
+    float cy = (n[0][1] + n[1][1] + n[2][1]) / 3;
+    cout << "коорд центра масс" << cx << "," << cy << endl;
+    
+
+    
+    return 0;
+}
+
+задача 4 
+#include <iostream> 
+#include <cmath>
+using namespace std;
+int main () {
+    int n[4][2];
+    for (int i = 0; i < 4; i++) {
+        cout << "координаты ввести" << i << " (x y) ";
+        cin >> n[i][0] >> n[i][1];
+    }
+    double dx = n[2][0] - n[0][0];
+    double dy = n[2][1] - n[0][1];
+
+    double d = sqrt(dx*dx + dy*dy);
+    cout << "длина диагонали" << d << endl;
+    return 0;
+}
+
+задача 5
+
