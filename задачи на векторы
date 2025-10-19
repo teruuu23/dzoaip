@@ -1,0 +1,566 @@
+задание 1
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    vector<int> v(10);
+
+    cout << "Введите 10 чисел:\n";
+    for (int i = 0; i < 10; ++i) {
+        cin >> v[i];
+    }
+
+    for_each(v.begin(), v.end(), [](int x){
+        cout << x << " ";
+    });
+
+    cout << endl;
+    return 0;
+}
+
+задание 2
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    vector<int> v(10);
+    for (int i = 0; i<10; i++) {
+        v[i] = i + 1;
+    }       
+    for_each(v.begin(), v.end(), [](int &x){
+        x = x*2;
+    });
+    for_each(v.begin(),v.end(),[]int x) {
+        cout << x << ' ';
+    })
+    cout << endl;
+    return 0;
+}
+
+задание 3
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    vector<int> v(20);
+    for (int i = 0; i<20; i++) {
+        v[i] = i + 1;
+    }       
+    auto max = max_element(v.begin(),v.end(),[](int a,int b){
+        return a < b;
+    });
+    cout << "максмиальное знач" << *max << endl;
+
+    
+    return 0;
+}
+
+задание 4
+#include <iostream>
+#include <vector>
+#include <algorithm> 
+#include <cstdlib>  
+#include <ctime>    
+using namespace std;
+
+int main() {
+    srand(time(0));
+    vector<int> v(20); 
+    for (int i = 0; i < 20; ++i) {
+        v[i] = rand() % 21 - 10; 
+    }
+    cout << "Исходный вектор:\n";
+    for (int x : v) cout << x << " ";
+    cout << "\n";
+    v.erase(remove_if(v.begin(), v.end(), [](int x){
+        return x < 0; 
+    }), v.end());
+    cout << "Вектор после удаления отрицательных чисел:\n";
+    for (int x : v) cout << x << " ";
+    cout << endl;
+
+    return 0;
+}
+
+задание 5
+#include <iostream>
+#include <vector>
+#include <algorithm> 
+#include <numeric>   
+using namespace std;
+
+int main() {
+    vector<int> v(20);
+
+    for (int i = 0; i < 20; ++i) {
+        v[i] = i + 1;
+    }
+
+    auto minmax = minmax_element(v.begin(), v.end());
+    cout << "Минимальный элемент: " << *minmax.first << endl;
+    cout << "Максимальный элемент: " << *minmax.second << endl;
+
+    double average = accumulate(v.begin(), v.end(), 0.0) / v.size();
+    cout << "Среднее значение: " << average << endl;
+
+    sort(v.begin(), v.end()); 
+    double median = (v[v.size()/2 - 1] + v[v.size()/2]) / 2.0;
+    cout << "Медиана: " << median << endl;
+
+    return 0;
+}
+задание 6
+#include <iostream>
+#include <vector>
+#include <algorithm> 
+using namespace std;
+
+int main() {
+    vector<int> v = {1, 7, 3, 4, 7, 5, 3, 8, 2, 9, 10, 1, 6, 7, 2, 5, 8, 9, 10, 4};
+
+    auto it = find(v.begin(), v.end(), 7);
+    if (it != v.end()) {
+        cout << "7 найдено" << endl;
+    } else {
+        cout << "7 не найдено." << endl;
+    }
+
+    sort(v.begin(), v.end());
+    auto last = unique(v.begin(), v.end()); 
+    v.erase(last, v.end()); 
+
+    cout << "Оставшиеся уникальные элементы:" << endl;
+    for (int x : v) {
+        cout << x << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+задание 7
+#include <iostream>
+#include <vector>
+#include <algorithm> 
+#include <numeric>  
+using namespace std;
+
+int main() {
+    vector<double> temps = {12.5, -60.0, 25.3, 48.2, 51.0, -12.7, 0.0, 35.5, -45.0, 49.9};
+
+    temps.erase(
+        remove_if(temps.begin(), temps.end(), [](double t){ return t < -50 || t > 50; }),
+        temps.end()
+    );
+
+    if (!temps.empty()) {
+        double average = accumulate(temps.begin(), temps.end(), 0.0) / temps.size();
+
+        auto minmax = minmax_element(temps.begin(), temps.end());
+        double min_temp = *minmax.first;
+        double max_temp = *minmax.second;
+
+        cout << "Средняя температура: " << average << endl;
+        cout << "Минимальная температура: " << min_temp << endl;
+        cout << "Максимальная температура: " << max_temp << endl;
+
+        bool all_above_minus10 = all_of(temps.begin(), temps.end(), [](double t){ return t > -10; });
+        if (all_above_minus10) {
+            cout << "Все температуры превышают -10 градусов." << endl;
+        } else {
+            cout << "Не все температуры превышают -10 градусов." << endl;
+        }
+    } else {
+        cout << "После фильтрации температур в диапазоне [-50, 50] вектор пуст." << endl;
+    }
+
+    return 0;
+}
+
+задание 8
+#include <iostream>
+#include <vector>
+#include <algorithm> 
+#include <numeric>  
+#include <cstdlib>   
+#include <ctime>    
+using namespace std;
+
+int main() {
+    srand(time(0)); 
+
+    for (int &s : speeds) {
+        s = rand() % 181; // 0..180
+    }
+
+    speeds.erase(
+        remove_if(speeds.begin(), speeds.end(), [](int s){ return s > 120; }),
+        speeds.end()
+    );
+
+    double average = speeds.empty() ? 0 : accumulate(speeds.begin(), speeds.end(), 0.0) / speeds.size();
+
+    bool all_moving = all_of(speeds.begin(), speeds.end(), [](int s){ return s > 0; });
+
+    cout << "Средняя скорость: " << average << endl;
+    cout << "Двигался ли автомобиль всегда (скорость > 0): " 
+         << (all_moving ? "Да" : "Нет") << endl;
+
+    sort(speeds.begin(), speeds.end(), greater<int>()); 
+    cout << "10 максимальных скоростей:" << endl;
+    for (int i = 0; i < min(10, (int)speeds.size()); ++i) {
+        cout << speeds[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+задание 9
+#include <iostream>
+#include <vector>
+#include <algorithm> 
+#include <numeric> 
+#include <cstdlib>  
+#include <ctime>    
+using namespace std;
+
+int main() {
+    srand(time(0)); 
+
+    // 1. Создаём вектор мощности двигателя (20 измерений в кВт)
+    vector<double> power(20);
+    for (double &p : power) {
+        p = rand() % 121 - 20; 
+    }
+
+    power.erase(
+        remove_if(power.begin(), power.end(), [](double p){ return p < 0; }),
+        power.end()
+    );
+
+    if (!power.empty()) {
+        auto minmax = minmax_element(power.begin(), power.end());
+        double min_power = *minmax.first;
+        double max_power = *minmax.second;
+
+
+        double average = accumulate(power.begin(), power.end(), 0.0) / power.size();
+
+        cout << "Минимальная мощность: " << min_power << " кВт" << endl;
+        cout << "Максимальная мощность: " << max_power << " кВт" << endl;
+        cout << "Средняя мощность: " << average << " кВт" << endl;
+
+        bool within_range = all_of(power.begin(), power.end(), [](double p){ return p >= 10 && p <= 90; });
+        cout << "Двигатель работал всё время в диапазоне 10..90 кВт: " 
+             << (within_range ? "Да" : "Нет") << endl;
+
+        sort(power.begin(), power.end());
+        double median;
+        if (power.size() % 2 == 0) {
+            median = (power[power.size()/2 - 1] + power[power.size()/2]) / 2.0;
+        } else {
+            median = power[power.size()/2];
+        }
+        cout << "Медиана мощности: " << median << " кВт" << endl;
+    } else {
+        cout << "После фильтрации все значения оказались ошибочными (<0)." << endl;
+    }
+
+    return 0;
+}
+задание 10
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    srand(time(0));
+
+    vector<double> energy(30);
+    for (double &e : energy) {
+        e = rand() % 101 + 50;
+    }
+
+    double total = accumulate(energy.begin(), energy.end(), 0.0);
+    cout << "Общее потребление за месяц: " << total << " кВт·ч" << endl;
+
+    double average = total / energy.size();
+    cout << "Среднесуточное потребление: " << average << " кВт·ч" << endl;
+
+    auto minmax = minmax_element(energy.begin(), energy.end());
+    int day_min = distance(energy.begin(), minmax.first) + 1;
+    int day_max = distance(energy.begin(), minmax.second) + 1;
+
+    cout << "День с минимальным потреблением: " << day_min << " (" << *minmax.first << " кВт·ч)" << endl;
+    cout << "День с максимальным потреблением: " << day_max << " (" << *minmax.second << " кВт·ч)" << endl;
+
+    double threshold = average * 1.2;
+    vector<double> peak_days;
+    copy_if(energy.begin(), energy.end(), back_inserter(peak_days),
+            [threshold](double e){ return e > threshold; });
+
+    cout << "Пиковые дни (потребление > 20% от среднего):" << endl;
+    for (double e : peak_days) {
+        cout << e << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+задание 11
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    srand(time(0));
+
+    vector<double> vibration(50);
+    for (double &v : vibration) {
+        v = (rand() % 1000) / 1000.0; 
+    }
+
+    vibration.erase(
+        remove_if(vibration.begin(), vibration.end(), [](double v){ return v < 0.1; }),
+        vibration.end()
+    );
+
+    if (!vibration.empty()) {
+        double average = accumulate(vibration.begin(), vibration.end(), 0.0) / vibration.size();
+        double max_value = *max_element(vibration.begin(), vibration.end());
+
+        bool all_above_threshold = all_of(vibration.begin(), vibration.end(), [](double v){ return v > 0.5; });
+
+        sort(vibration.begin(), vibration.end(), greater<double>());
+
+        cout << "Средняя амплитуда: " << average << endl;
+        cout << "Максимальная амплитуда: " << max_value << endl;
+        cout << "Все значения выше 0.5: " << (all_above_threshold ? "Да" : "Нет") << endl;
+
+        cout << "10 наибольших амплитуд:" << endl;
+        for (int i = 0; i < min(10, (int)vibration.size()); ++i) {
+            cout << vibration[i] << " ";
+        }
+        cout << endl;
+    } else {
+        cout << "После фильтрации шумов вектор пуст." << endl;
+    }
+
+    return 0;
+}
+задание 12
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    srand(time(0));
+
+    vector<double> fuel(50);
+    for (double &f : fuel) {
+        f = (rand() % 101) / 1.0;
+    }
+
+    double min_fuel = *min_element(fuel.begin(), fuel.end());
+    cout << "Минимальный уровень топлива: " << min_fuel << "%" << endl;
+
+    double max_fuel = *max_element(fuel.begin(), fuel.end());
+    bool below_5_percent = any_of(fuel.begin(), fuel.end(), [max_fuel](double f){ return f < 0.05 * max_fuel; });
+    cout << "Были ли замеры ниже 5% от максимального: " << (below_5_percent ? "Да" : "Нет") << endl;
+
+    double avg_consumption = (fuel.front() - fuel.back()) / (fuel.size() - 1);
+    cout << "Среднее потребление топлива: " << avg_consumption << "% за замер" << endl;
+
+    sort(fuel.begin(), fuel.end());
+    double median;
+    if (fuel.size() % 2 == 0) {
+        median = (fuel[fuel.size()/2 - 1] + fuel[fuel.size()/2]) / 2.0;
+    } else {
+        median = fuel[fuel.size()/2];
+    }
+    cout << "Медиана уровня топлива: " << median << "%" << endl;
+
+    return 0;
+}
+задание 13
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    srand(time(0));
+
+    vector<double> pressure(50);
+    for (double &p : pressure) {
+        p = 1 + rand() % 10;
+    }
+
+    pressure.erase(
+        remove_if(pressure.begin(), pressure.end(), [](double p){ return p < 0 || p > 12; }),
+        pressure.end()
+    );
+
+    double average = accumulate(pressure.begin(), pressure.end(), 0.0) / pressure.size();
+    cout << "Среднее давление: " << average << " бар" << endl;
+
+    auto minmax = minmax_element(pressure.begin(), pressure.end());
+    cout << "Минимальное давление: " << *minmax.first << " бар" << endl;
+    cout << "Максимальное давление: " << *minmax.second << " бар" << endl;
+
+    cout << "Давление больше 8 бар:" << endl;
+    for_each(pressure.begin(), pressure.end(), [](double p){
+        if (p > 8) cout << p << " ";
+    });
+    cout << endl;
+
+    return 0;
+}
+задание 14
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    srand(time(0));
+
+    vector<double> consumption(24);
+    for (double &c : consumption) {
+        c = 100 + rand() % 401; 
+    }
+
+    double total = accumulate(consumption.begin(), consumption.end(), 0.0);
+    double average = total / consumption.size();
+
+    cout << "Суммарное потребление: " << total << " кВт·ч" << endl;
+    cout << "Среднее потребление: " << average << " кВт·ч" << endl;
+
+    auto peak_hour_it = max_element(consumption.begin(), consumption.end());
+    int peak_hour = distance(consumption.begin(), peak_hour_it);
+    cout << "Час пикового потребления: " << peak_hour << " (" << *peak_hour_it << " кВт·ч)" << endl;
+
+    vector<double> deviation(consumption.size());
+    transform(consumption.begin(), consumption.end(), deviation.begin(),
+              [average](double c){ return c - average; });
+
+    sort(deviation.begin(), deviation.end());
+    cout << "Топ-5 минимальных отклонений от среднего:" << endl;
+    for (int i = 0; i < min(5, (int)deviation.size()); ++i) {
+        cout << deviation[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+задание 15
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    srand(time(0));
+
+    vector<vector<double>> temp(5, vector<double>(30));
+    vector<vector<double>> pressure(5, vector<double>(100));
+
+    for (auto &channel : temp)
+        for (double &t : channel)
+            t = 20 + rand() % 15;
+
+    for (auto &channel : pressure)
+        for (double &p : channel)
+            p = 1 + rand() % 10;
+
+    vector<double> avg_temp(5);
+    transform(temp.begin(), temp.end(), avg_temp.begin(), [](const vector<double>& ch){
+        return accumulate(ch.begin(), ch.end(), 0.0)/ch.size();
+    });
+
+    cout << "Средние температуры каналов:" << endl;
+    for (int i = 0; i < avg_temp.size(); ++i)
+        cout << "Канал " << i << ": " << avg_temp[i] << endl;
+
+    cout << "\nМин и макс давления каналов:" << endl;
+    for (int i = 0; i < pressure.size(); ++i){
+        auto mm = minmax_element(pressure[i].begin(), pressure[i].end());
+        cout << "Канал " << i << ": мин " << *mm.first << ", макс " << *mm.second << endl;
+    }
+
+    vector<vector<double>> temp_diff(5);
+    for (int i = 0; i < 5; ++i){
+        temp_diff[i].resize(temp[i].size()-1);
+        transform(temp[i].begin(), temp[i].end()-1, temp[i].begin()+1, temp_diff[i].begin(),
+                  [](double a, double b){ return b - a; });
+    }
+
+    vector<vector<double>> pressure_diff(5);
+    for (int i = 0; i < 5; ++i){
+        pressure_diff[i].resize(pressure[i].size()-1);
+        transform(pressure[i].begin(), pressure[i].end()-1, pressure[i].begin()+1, pressure_diff[i].begin(),
+                  [](double a, double b){ return b - a; });
+    }
+
+    double max_variation = 0;
+    int max_var_channel = 0;
+    for (int i = 0; i < 5; ++i){
+        auto mm = minmax_element(temp[i].begin(), temp[i].end());
+        double variation = *mm.second - *mm.first;
+        if (variation > max_variation){
+            max_variation = variation;
+            max_var_channel = i;
+        }
+    }
+    cout << "\nКанал с наибольшей вариацией температуры: " << max_var_channel << endl;
+
+    vector<vector<double>> norm_pressure(5);
+    for (int i = 0; i < 5; ++i){
+        norm_pressure[i].resize(pressure[i].size());
+        auto mm = minmax_element(pressure[i].begin(), pressure[i].end());
+        double min_p = *mm.first;
+        double max_p = *mm.second;
+        transform(pressure[i].begin(), pressure[i].end(), norm_pressure[i].begin(),
+                  [min_p,max_p](double v){ return (v - min_p)/(max_p - min_p); });
+    }
+
+    cout << "\nПиковые давления (нормализованные >0.9):" << endl;
+    for_each(norm_pressure.begin(), norm_pressure.end(), [](const vector<double>& ch){
+        for_each(ch.begin(), ch.end(), [](double v){ if (v>0.9) cout << v << " "; });
+    });
+    cout << endl;
+
+    vector<pair<double,int>> avg_temp_idx;
+    for (int i = 0; i < avg_temp.size(); ++i) avg_temp_idx.push_back({avg_temp[i],i});
+    sort(avg_temp_idx.begin(), avg_temp_idx.end());
+    int max_avg_channel = avg_temp_idx.back().second;
+    cout << "\nКанал с максимальной средней температурой: " << max_avg_channel << endl;
+
+    return 0;
+}
