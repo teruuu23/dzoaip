@@ -1,0 +1,386 @@
+задание 1
+#include <iostream>
+#include <cstring>
+#include <cctype>  
+
+using namespace std;
+
+int main() {
+    const int size = 256;
+    char input[size];
+
+    cout << "ââåäèòå ñòðîêó äëÿ ïðîâåðêè: ";
+    cin.getline(input, size);
+
+    int left = 0;
+    int right = strlen(input) - 1;
+    bool isPalindrome = true;
+
+    while (left < right && isPalindrome) {
+        while (left < right && input[left] == ' ') {
+            left++;
+        }
+        while (left < right && input[right] == ' ') {
+            right--;
+        }
+
+        if (tolower(input[left]) != tolower(input[right])) {
+            isPalindrome = false;
+        }
+
+        left++;
+        right--;
+    }
+    if (isPalindrome) {
+        cout << "ñòðîêà ÿâëÿåòñÿ ïàëèíäðîìîì" << endl;
+    }
+    else {
+        cout << "ñòðîêà ÍÅ ÿâëÿåòñÿ ïàëèíäðîìîì" << endl;
+    }
+
+    return 0;
+}
+*/
+
+задание 2
+#include <iostream>
+#include <cstring>  // äëÿ strlen
+#include <cctype>   // äëÿ tolower
+using namespace std;
+
+int main() {
+    const int size = 7;
+    char str[size];
+
+    cout << "ââåäèòå ñòðîêó äëÿ ïðîâåðêè: ";
+    cin.getline(str, size);
+    int c = 0;
+    char f[size];
+    for (int i = 0; str[i] != '\0'; i++) {
+        bool isUnique = true;
+
+        for (int j = 0; j < i; j++) {
+            if (str[i] == str[j]) {
+                isUnique = false;
+                break;
+            }
+        }
+
+        if (isUnique) {
+            c++;
+        }
+    }
+    cout << c;
+    return 0;
+}
+задание 3
+#include <iostream>
+#include <cstring>  // äëÿ strlen
+#include <cctype>   // äëÿ tolower
+using namespace std;
+
+int main() {
+    const int size = 10;
+    char str[size];
+
+    cout << "ââåäèòå ñòðîêó äëÿ ïðîâåðêè: ";
+    cin.getline(str, size);
+    int c = 0;
+    char f[size];
+    for (int i = 0; i < size; i++) {
+        if str[i] == '1' || str[i] == '2' || str[i] == '3' || str[i] == '4' || str[i] == '5' || str[i] == '6' || str[i] == '7' || str[i] == '8' || str[i] == '9' || str[i] == '0' {
+            str[i] == ' '
+        }
+    }
+    cout << str;
+    return 0;
+}
+задание 4
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    string A, B;
+
+    cout << "ââåäèòå ñòðîêó A: ";
+    cin >> A;
+    cout << "ââåäèòå ñòðîêó B: ";
+    cin >> B;
+
+    bool allCharsFound = true;
+
+    for (int i = 0; i < B.size(); i++) {
+        char currentChar = B[i];
+        bool charFound = false;
+
+        for (int j = 0; j < A.size(); j++) {
+            if (A[j] == currentChar) {
+                charFound = true;
+                break;
+            }
+        }
+
+        if (!charFound) {
+            allCharsFound = false;
+            break;
+        }
+    }
+    if (allCharsFound) {
+        cout << "äà" << endl;
+    }
+    else {
+        cout << "íåò" << endl;
+    }
+    return 0;
+}
+
+
+задание 5
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    string A;
+
+    cout << "ââåäèòå ñòðîêó A: ";
+    cin >> A;
+
+    int c = 0;
+    int d = 0;
+    for (int i = 0; i < A.size(); i++) {
+        if ((toupper(A[i]) == 'A') || (toupper(A[i]) == 'E') || (toupper(A[i]) == 'I') || (toupper(A[i]) == 'Y') || (toupper(A[i]) == 'O') || (toupper(A[i]) == 'U')) {
+            c++;
+        }
+        else {
+            d++;
+        }
+    }
+    cout << "ãëàñíûõ: " << c << ", ñîãëàñíûõ: " << d;
+    return 0;
+}
+задание 6
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    string text;
+    int shift;
+    cout << "òåêñò: ";
+    getline(cin, text);
+    cout << "ñäâèã: ";
+    cin >> shift;
+
+    for (char& c : text) {
+        if (c >= 'A' && c <= 'Z') {
+            // çàãëàâíûå áóêâû
+            c = (c - 'A' + shift) % 26 + 'A';
+        }
+        else if (c >= 'a' && c <= 'z') {
+            // còðî÷íûå áóêâû
+            c = (c - 'a' + shift) % 26 + 'a';
+        }
+    }
+    cout << text << endl;
+
+    return 0;
+}
+задание 7
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    string input;
+    cout << "ââåäèòå ñòðîêó: ";
+    cin >> input;
+    string result = "";
+    int count = 1;
+    char currentChar = input[0];
+
+    for (int i = 1; i < input.length(); i++) {
+        if (input[i] == currentChar) {
+            count++;
+        }
+        else {
+            result += currentChar;
+            result += to_string(count);
+
+            currentChar = input[i];
+            count = 1;
+        }
+    }
+    result += currentChar;
+    result += to_string(count);
+
+    cout << result << endl;
+
+    return 0;
+}
+задание 8
+#include <iostream>
+#include <string>
+#include <cctype>
+
+using namespace std;
+
+int main() {
+    string text;
+    cout << "ââåäèòå òåêñò: ";
+    getline(cin, text);
+    bool newSentence = true;
+
+    for (int i = 0; i < text.length(); i++) {
+        if (newSentence && isalpha(text[i])) {
+            text[i] = toupper(text[i]);
+            newSentence = false;
+        }
+        else if (!newSentence) {
+            text[i] = tolower(text[i]);
+        }
+
+        if (text[i] == '.' || text[i] == '!' || text[i] == '?') {
+            newSentence = true;
+            while (i + 1 < text.length() && text[i + 1] == ' ') {
+                i++;
+            }
+        }
+    }
+
+    cout << text << endl;
+
+    return 0;
+}
+задание 9
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    string s1, s2;
+    cout << "ââåäèòå ïåðâóþ ñòðîêó: ";
+    cin >> s1;
+    cout << "ââåäèòå âòîðóþ ñòðîêó: ";
+    cin >> s2;
+
+    int m = s1.length();
+    int n = s2.length();
+
+    int dp[100][100] = { 0 }; 
+
+    int maxLen = 0;     
+    int endIndex = 0;
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (s1[i] == s2[j]) {
+                if (i > 0 && j > 0) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                }
+                else {
+                    dp[i][j] = 1;
+                }
+                if (dp[i][j] > maxLen) {
+                    maxLen = dp[i][j];
+                    endIndex = i;
+                }
+            }
+        }
+    }
+     if (maxLen > 0) {
+        string result = s1.substr(endIndex - maxLen + 1, maxLen);
+        cout << "ñàìàÿ äëèííàÿ îáùàÿ ïîäñòðîêà: \"" << result << "\"" << endl;
+    }
+    else {
+        cout << "îáùèõ ïîäñòðîê íå íàéäåíî" << endl;
+    }
+
+    return 0;
+}
+задание 10
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    string input;
+
+    cout << "ââåäèòå ïðåäëîæåíèå: ";
+    getline(cin, input);
+
+    string result = "";
+    string word = "";
+
+    for (int i = 0; i < input.length(); i++) {
+        if (input[i] == ' ') {
+            if (!word.empty()) {
+                for (int j = word.length() - 1; j >= 0; j--) {
+                    result += word[j];
+                }
+                word = "";
+            }
+            result += ' ';
+        }
+        else {
+            word += input[i];
+        }
+    }
+
+    if (!word.empty()) {
+        for (int j = word.length() - 1; j >= 0; j--) {
+            result += word[j];
+        }
+    }
+
+    cout << "ðåçóëüòàò: " << result << endl;
+
+    return 0;
+}
+задание 11
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    string str;
+    int k;
+
+    // Ââîä äàííûõ
+    cout << "ââåäèòå ñòðîêó: ";
+    cin >> str;
+    cout << "ââåäèòå k: ";
+    cin >> k;
+
+    int n = str.length();
+
+    cout << "ïîäñòðîêè äëèíû " << k << " ñ óíèêàëüíûìè ñèìâîëàìè:" << endl;
+    for (int i = 0; i <= n - k; i++) {
+        string substring = str.substr(i, k);
+        bool allUnique = true;
+
+        for (int j = 0; j < k && allUnique; j++) {
+            for (int m = j + 1; m < k; m++) {
+                if (substring[j] == substring[m]) {
+                    allUnique = false;
+                    break; 
+                }
+            }
+        }
+
+        if (allUnique) {
+            cout << substring << endl;
+        }
+    }
+
+    return 0;
+}
+*/
